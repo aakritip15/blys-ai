@@ -1,0 +1,501 @@
+Customer_ID,Booking_Frequency,Avg_Spending,Preferred_Service,Review_Text,Last_Activity
+1001,3,168.99,Deep Tissue Massage,"Okay overall, some improvements needed.",2025-12-31
+1002,14,,Deep Tissue Massage,"Perfect stress relief, thank you!",2026-03-30
+1003,7,,Body Scrub,"Absolutely loved it, will book again!",2025-12-05
+1004,2,77.79,Couples Massage,Expected more for the cost.,2026-03-26
+1005,3,167.57,Facial,Exceeded my expectations completely.,2025-11-24
+1006,2,64.64,Facial,Therapist arrived late and seemed rushed.,2025-04-06
+1007,1,52.81,Reflexology,Exceeded my expectations completely.,2025-06-09
+1008,10,279.61,Reflexology,"Fantastic, arrived on time and very skilled.",2026-02-18
+1009,10,287.63,Reflexology,Best massage I've ever had.,2026-03-14
+1010,13,390.41,Deep Tissue Massage,,2026-03-30
+1011,2,138.47,Pedicure,Service was okay but nothing special.,2026-03-12
+1012,9,235.69,Aromatherapy,Very professional and relaxing experience.,2026-02-19
+1013,8,551.39,Reflexology,"Fantastic, arrived on time and very skilled.",2026-03-28
+1014,8,255.82,Massage,"Fantastic, arrived on time and very skilled.",2026-02-21
+1015,10,218.04,Aromatherapy,"Fantastic, arrived on time and very skilled.",2026-03-10
+1016,9,302.39,Facial,Service was standard.,2026-02-24
+1017,,302.5,Manicure,,2026-02-22
+1018,2,44.37,Body Scrub,"Not worth the price, disappointing.",2025-08-03
+1019,1,62.84,Manicure,"Had to reschedule twice, very inconvenient.",2026-03-17
+1020,9,301.05,Deep Tissue Massage,Exceeded my expectations completely.,2026-02-12
+1021,7,134.18,Deep Tissue Massage,Best massage I've ever had.,2025-12-31
+1022,5,291.57,Deep Tissue Massage,Best massage I've ever had.,2026-03-25
+1023,10,247.08,Wellness Package,"Perfect stress relief, thank you!",2026-02-22
+1024,2,69.04,Reflexology,Quality has dropped compared to last time.,2026-03-29
+1025,18,594.46,Massage,"Worth every dollar, incredible service.",2026-03-29
+1026,9,239.72,Wellness Package,"Absolutely loved it, will book again!",2026-03-01
+1027,3,59.79,Manicure,,2026-03-12
+1028,8,247.13,Aromatherapy,"Okay overall, some improvements needed.",2026-03-15
+1029,8,207.05,Swedish Massage,"Fine, nothing outstanding but okay.",2026-02-12
+1030,5,265.84,Massage,"Perfect stress relief, thank you!",2026-02-22
+1031,3,39.45,Facial,"Perfect stress relief, thank you!",2025-05-26
+1032,5,338.32,Deep Tissue Massage,Best massage I've ever had.,2026-02-20
+1033,7,117.96,Deep Tissue Massage,"Fantastic, arrived on time and very skilled.",2025-12-29
+1034,2,95.72,Facial,Too expensive for what you get.,2026-03-03
+1035,11,427.06,Couples Massage,"Okay overall, some improvements needed.",2026-03-28
+1036,7,164.42,Reflexology,,2025-11-14
+1037,1,76.45,Facial,Very professional and relaxing experience.,2026-03-04
+1038,1,118.75,Hot Stone Massage,"Average experience, might try again.",2026-03-05
+1039,14,540.27,Massage,Best massage I've ever had.,2026-03-31
+1040,3,120.57,Massage,Service was standard.,2026-03-15
+1041,5,149.9,Aromatherapy,,2026-01-13
+1042,1,83.94,Reflexology,Too expensive for what you get.,2025-08-11
+1043,3,,Wellness Package,,2025-08-04
+1044,8,310.45,Swedish Massage,"Fine, nothing outstanding but okay.",2026-02-01
+1045,5,321.72,Deep Tissue Massage,"Average experience, might try again.",2026-03-14
+1046,1,31.42,Aromatherapy,Expected more for the cost.,2025-08-15
+1047,9,229.94,Manicure,Best massage I've ever had.,2026-02-03
+1048,7,157.65,Aromatherapy,Very professional and relaxing experience.,2026-02-18
+1049,6,,Hot Stone Massage,"Fine, nothing outstanding but okay.",2026-01-07
+1050,4,123.71,Reflexology,"Worth every dollar, incredible service.",2026-01-23
+1051,3,48.56,Couples Massage,"Had to reschedule twice, very inconvenient.",2025-06-21
+1052,2,117.73,Wellness Package,,2026-03-04
+1053,6,235.98,Body Scrub,Quality has dropped compared to last time.,2026-02-19
+1054,4,159.06,Manicure,Quality has dropped compared to last time.,2025-12-26
+1055,7,194.93,Wellness Package,,2026-03-16
+1056,2,91.44,Body Scrub,Quality has dropped compared to last time.,2026-03-12
+1057,19,251.94,Facial,"Decent service, met expectations.",2026-03-08
+1058,3,146.89,Facial,Too expensive for what you get.,2025-10-06
+1059,5,194.0,Pedicure,"Had to reschedule twice, very inconvenient.",2025-10-09
+1060,2,83.83,Pedicure,Therapist arrived late and seemed rushed.,2025-06-04
+1061,2,112.67,Pedicure,"Not worth the price, disappointing.",2026-03-24
+1062,1,38.3,Aromatherapy,Best massage I've ever had.,2025-08-05
+1063,8,233.15,Aromatherapy,"Worth every dollar, incredible service.",2026-03-15
+1064,3,52.82,Couples Massage,"Not worth the price, disappointing.",2025-10-02
+1065,7,175.98,Deep Tissue Massage,"Perfect stress relief, thank you!",2025-10-09
+1066,10,309.63,Wellness Package,"Average experience, might try again.",2026-02-10
+1067,14,457.16,Massage,Best massage I've ever had.,2026-03-11
+1068,14,364.57,Couples Massage,Best massage I've ever had.,2026-03-18
+1069,2,133.49,Massage,Very professional and relaxing experience.,2026-03-17
+1070,3,54.03,Deep Tissue Massage,Quality has dropped compared to last time.,2026-04-01
+1071,3,147.68,Pedicure,Best massage I've ever had.,2026-01-04
+1072,1,127.78,Hot Stone Massage,Expected more for the cost.,2026-03-27
+1073,2,53.8,Deep Tissue Massage,"Not worth the price, disappointing.",2025-04-03
+1074,2,135.03,Facial,"Fantastic, arrived on time and very skilled.",2026-03-13
+1075,5,88.27,Couples Massage,"Decent service, met expectations.",2025-11-10
+1076,3,83.49,Swedish Massage,"Okay overall, some improvements needed.",2025-06-08
+1077,9,304.93,Aromatherapy,"Average experience, might try again.",2026-02-27
+1078,1,77.89,Deep Tissue Massage,"Worth every dollar, incredible service.",2026-03-18
+1079,13,313.64,Couples Massage,"Fine, nothing outstanding but okay.",2026-03-26
+1080,3,30.61,Facial,Too expensive for what you get.,2025-08-16
+1081,3,121.18,Massage,"Average experience, might try again.",2026-03-18
+1082,2,97.33,Couples Massage,Quality has dropped compared to last time.,2026-03-16
+1083,5,110.17,Swedish Massage,"Absolutely loved it, will book again!",2026-01-16
+1084,1,71.64,Hot Stone Massage,Very professional and relaxing experience.,2026-03-17
+1085,1,47.77,Wellness Package,,2025-07-03
+1086,,47.53,Reflexology,"Perfect stress relief, thank you!",2025-09-01
+1087,8,238.09,Massage,"Absolutely loved it, will book again!",2026-03-17
+1088,3,149.24,Massage,"Okay overall, some improvements needed.",2025-11-05
+1089,1,63.48,Body Scrub,,2025-06-19
+1090,6,115.68,Aromatherapy,Very professional and relaxing experience.,2025-11-17
+1091,20,322.73,Hot Stone Massage,"Fantastic, arrived on time and very skilled.",2026-03-26
+1092,8,240.1,Pedicure,,2026-02-18
+1093,1,71.24,Reflexology,"Okay overall, some improvements needed.",2025-07-28
+1094,4,189.01,Wellness Package,"Average experience, might try again.",2025-10-18
+1095,2,93.92,Swedish Massage,"Not worth the price, disappointing.",2026-03-18
+1096,3,,Aromatherapy,"Worth every dollar, incredible service.",2025-10-10
+1097,3,108.71,Reflexology,Best massage I've ever had.,2026-04-01
+1098,6,189.93,Body Scrub,"Perfect stress relief, thank you!",2026-01-08
+1099,7,214.21,Wellness Package,Best massage I've ever had.,2026-03-22
+1100,7,84.4,Couples Massage,"Absolutely loved it, will book again!",2026-01-20
+1101,3,158.92,Pedicure,"Perfect stress relief, thank you!",2025-11-23
+1102,6,171.2,Hot Stone Massage,Expected more for the cost.,2026-01-05
+1103,3,,Deep Tissue Massage,,2025-11-15
+1104,5,242.29,Reflexology,"Okay overall, some improvements needed.",2026-03-21
+1105,8,346.05,Pedicure,"Highly recommend, therapist was excellent.",2026-03-13
+1106,1,136.4,Aromatherapy,Expected more for the cost.,2026-03-24
+1107,7,317.5,Reflexology,"Perfect stress relief, thank you!",2026-02-19
+1108,9,225.44,Deep Tissue Massage,Exceeded my expectations completely.,2026-03-08
+1109,5,169.36,Aromatherapy,Exceeded my expectations completely.,2025-11-02
+1110,5,175.25,Couples Massage,Service was standard.,2026-02-19
+1111,4,129.2,Wellness Package,"Average experience, might try again.",2025-11-09
+1112,3,58.03,Reflexology,"Perfect stress relief, thank you!",2026-03-22
+1113,2,82.34,Body Scrub,"Not worth the price, disappointing.",2025-09-24
+1114,5,236.79,Reflexology,Service was standard.,2026-03-22
+1115,20,269.64,Couples Massage,"Fantastic, arrived on time and very skilled.",2026-03-21
+1116,1,67.51,Aromatherapy,,2026-03-13
+1117,10,200.8,Reflexology,"Absolutely loved it, will book again!",2026-03-12
+1118,3,133.01,Body Scrub,Very professional and relaxing experience.,2025-12-18
+1119,1,149.94,Pedicure,Expected more for the cost.,2026-03-05
+1120,2,31.32,Aromatherapy,,2025-04-18
+1121,3,74.71,Deep Tissue Massage,"Had to reschedule twice, very inconvenient.",2025-07-22
+1122,10,303.49,Wellness Package,"Worth every dollar, incredible service.",2026-02-13
+1123,1,107.96,Wellness Package,"Not worth the price, disappointing.",2026-03-09
+1124,9,325.29,Manicure,"Absolutely loved it, will book again!",2026-03-05
+1125,2,146.74,Swedish Massage,"Perfect stress relief, thank you!",2026-03-23
+1126,11,551.05,Reflexology,"Worth every dollar, incredible service.",2026-03-09
+1127,1,76.45,Pedicure,Service was okay but nothing special.,2026-03-29
+1128,2,60.83,Pedicure,Too expensive for what you get.,2026-03-25
+1129,3,156.25,Swedish Massage,Very professional and relaxing experience.,2025-12-03
+1130,15,290.64,Manicure,"Worth every dollar, incredible service.",2026-03-25
+1131,3,91.91,Swedish Massage,"Okay overall, some improvements needed.",2026-03-09
+1132,5,83.93,Deep Tissue Massage,Too expensive for what you get.,2025-12-15
+1133,2,62.67,Couples Massage,Therapist arrived late and seemed rushed.,2025-04-21
+1134,2,,Reflexology,"Absolutely loved it, will book again!",2026-03-26
+1135,6,307.4,Facial,"Average experience, might try again.",2026-03-15
+1136,2,76.46,Massage,Therapist arrived late and seemed rushed.,2025-05-04
+1137,6,171.99,Massage,,2026-02-01
+1138,6,203.07,Swedish Massage,"Perfect stress relief, thank you!",2026-03-20
+1139,3,109.37,Manicure,"Highly recommend, therapist was excellent.",2026-03-18
+1140,3,48.1,Massage,Therapist arrived late and seemed rushed.,2025-04-22
+1141,19,568.4,Facial,Best massage I've ever had.,2026-03-30
+1142,7,165.46,Body Scrub,"Absolutely loved it, will book again!",2025-12-14
+1143,1,135.28,Manicure,Very professional and relaxing experience.,2026-03-12
+1144,6,127.85,Facial,"Worth every dollar, incredible service.",2025-10-30
+1145,8,163.43,Facial,Best massage I've ever had.,2026-02-03
+1146,8,455.26,Manicure,Best massage I've ever had.,2026-03-15
+1147,2,82.09,Massage,"Not worth the price, disappointing.",2025-04-02
+1148,10,246.44,Facial,Very professional and relaxing experience.,2026-02-02
+1149,6,181.42,Body Scrub,"Had to reschedule twice, very inconvenient.",2025-10-25
+1150,3,76.74,Hot Stone Massage,Very professional and relaxing experience.,2026-03-27
+1151,18,390.27,Swedish Massage,"Worth every dollar, incredible service.",2026-03-28
+1152,8,218.18,Hot Stone Massage,"Perfect stress relief, thank you!",2026-03-05
+1153,1,39.44,Massage,"Highly recommend, therapist was excellent.",2025-04-28
+1154,6,112.78,Manicure,Service was standard.,2025-10-27
+1155,7,160.06,Deep Tissue Massage,"Worth every dollar, incredible service.",2026-01-26
+1156,1,75.85,Couples Massage,,2025-07-21
+1157,10,196.02,Reflexology,"Fine, nothing outstanding but okay.",2026-02-21
+1158,6,190.54,Couples Massage,Service was okay but nothing special.,2025-10-13
+1159,8,154.17,Wellness Package,"Fine, nothing outstanding but okay.",2026-03-08
+1160,8,318.9,Aromatherapy,Best massage I've ever had.,2026-03-13
+1161,1,83.31,Facial,"Average experience, might try again.",2026-03-27
+1162,2,122.74,Reflexology,Exceeded my expectations completely.,2026-03-06
+1163,6,302.04,Facial,"Fantastic, arrived on time and very skilled.",2026-02-15
+1164,7,133.87,Body Scrub,"Worth every dollar, incredible service.",2025-10-05
+1165,4,132.77,Pedicure,Quality has dropped compared to last time.,2025-12-02
+1166,5,135.41,Massage,"Fantastic, arrived on time and very skilled.",2026-01-27
+1167,3,65.64,Pedicure,"Okay overall, some improvements needed.",2025-06-27
+1168,7,158.22,Body Scrub,"Perfect stress relief, thank you!",2025-12-21
+1169,2,148.24,Manicure,"Absolutely loved it, will book again!",2026-03-30
+1170,7,153.18,Couples Massage,,2025-12-16
+1171,5,87.91,Manicure,Exceeded my expectations completely.,2026-01-19
+1172,1,50.0,Reflexology,Service was okay but nothing special.,2025-05-07
+1173,1,109.5,Hot Stone Massage,Service was standard.,2026-03-30
+1174,3,149.72,Manicure,"Average experience, might try again.",2026-03-03
+1175,6,340.23,Pedicure,Exceeded my expectations completely.,2026-03-07
+1176,1,100.77,Swedish Massage,,2026-03-15
+1177,14,303.99,Swedish Massage,"Decent service, met expectations.",2026-03-27
+1178,13,486.73,Pedicure,Very professional and relaxing experience.,2026-03-25
+1179,5,195.87,Pedicure,"Absolutely loved it, will book again!",2025-10-23
+1180,5,173.37,Manicure,"Perfect stress relief, thank you!",2025-11-28
+1181,12,268.26,Couples Massage,"Highly recommend, therapist was excellent.",2026-03-17
+1182,9,517.09,Pedicure,"Okay overall, some improvements needed.",2026-03-24
+1183,2,83.08,Aromatherapy,Therapist arrived late and seemed rushed.,2025-09-27
+1184,11,259.87,Facial,"Average experience, might try again.",2026-03-03
+1185,15,,Swedish Massage,"Perfect stress relief, thank you!",2026-03-28
+1186,6,259.76,Body Scrub,"Absolutely loved it, will book again!",2026-02-10
+1187,11,396.94,Body Scrub,Exceeded my expectations completely.,2026-03-07
+1188,7,149.01,Wellness Package,"Highly recommend, therapist was excellent.",2025-11-01
+1189,3,142.82,Facial,"Not worth the price, disappointing.",2025-12-16
+1190,15,265.24,Couples Massage,"Absolutely loved it, will book again!",2026-03-20
+1191,10,275.65,Body Scrub,"Perfect stress relief, thank you!",2026-02-07
+1192,10,185.02,Reflexology,Exceeded my expectations completely.,2026-02-07
+1193,19,521.67,Massage,"Highly recommend, therapist was excellent.",2026-03-18
+1194,7,253.08,Manicure,"Perfect stress relief, thank you!",2026-02-04
+1195,5,323.16,Hot Stone Massage,Very professional and relaxing experience.,2026-03-07
+1196,6,120.68,Pedicure,Therapist arrived late and seemed rushed.,2026-01-08
+1197,14,277.62,Wellness Package,"Highly recommend, therapist was excellent.",2026-03-13
+1198,8,270.52,Wellness Package,Exceeded my expectations completely.,2026-03-01
+1199,3,89.89,Reflexology,"Fine, nothing outstanding but okay.",2025-07-25
+1200,3,66.0,Wellness Package,"Perfect stress relief, thank you!",2026-04-01
+1201,20,475.81,Aromatherapy,,2026-03-21
+1202,8,302.62,Wellness Package,"Absolutely loved it, will book again!",2026-02-20
+1203,1,74.14,Manicure,"Had to reschedule twice, very inconvenient.",2025-05-29
+1204,1,149.64,Swedish Massage,"Fine, nothing outstanding but okay.",2026-03-23
+1205,10,239.02,Reflexology,Service was standard.,2026-03-23
+1206,5,186.96,Wellness Package,Quality has dropped compared to last time.,2025-10-15
+1207,1,44.2,Massage,Service was okay but nothing special.,2025-05-30
+1208,7,186.11,Hot Stone Massage,"Worth every dollar, incredible service.",2026-01-23
+1209,3,57.38,Reflexology,"Not worth the price, disappointing.",2026-03-22
+1210,3,68.39,Wellness Package,Quality has dropped compared to last time.,2025-08-18
+1211,5,99.76,Swedish Massage,"Highly recommend, therapist was excellent.",2025-12-21
+1212,2,69.63,Hot Stone Massage,Service was okay but nothing special.,2026-03-15
+1213,7,192.99,Wellness Package,"Fantastic, arrived on time and very skilled.",2026-01-12
+1214,1,79.51,Facial,Therapist arrived late and seemed rushed.,2025-09-26
+1215,9,233.32,Massage,"Perfect stress relief, thank you!",2026-02-16
+1216,6,310.94,Aromatherapy,"Highly recommend, therapist was excellent.",2026-02-13
+1217,6,104.48,Wellness Package,"Worth every dollar, incredible service.",2025-11-15
+1218,8,176.15,Manicure,"Highly recommend, therapist was excellent.",2026-03-05
+1219,4,91.62,Aromatherapy,"Had to reschedule twice, very inconvenient.",2025-12-25
+1220,3,122.11,Wellness Package,Therapist arrived late and seemed rushed.,2026-03-26
+1221,3,193.43,Pedicure,"Highly recommend, therapist was excellent.",2025-11-28
+1222,6,114.29,Facial,"Perfect stress relief, thank you!",2026-01-30
+1223,3,128.07,Manicure,"Absolutely loved it, will book again!",2025-11-20
+1224,7,113.57,Reflexology,Very professional and relaxing experience.,2025-11-13
+1225,2,105.78,Wellness Package,Quality has dropped compared to last time.,2026-03-21
+1226,19,366.56,Manicure,Exceeded my expectations completely.,2026-03-17
+1227,2,39.75,Swedish Massage,Exceeded my expectations completely.,2025-04-29
+1228,7,115.97,Massage,Very professional and relaxing experience.,2025-10-19
+1229,10,324.42,Massage,Very professional and relaxing experience.,2026-02-16
+1230,3,72.75,Body Scrub,Therapist arrived late and seemed rushed.,2026-03-31
+1231,,132.17,Massage,"Okay overall, some improvements needed.",2026-03-25
+1232,6,232.59,Aromatherapy,"Not worth the price, disappointing.",2026-03-15
+1233,1,120.58,Deep Tissue Massage,Service was standard.,2026-03-16
+1234,6,241.93,Couples Massage,Expected more for the cost.,2026-02-22
+1235,5,153.21,Deep Tissue Massage,Best massage I've ever had.,2026-01-07
+1236,7,290.98,Swedish Massage,"Perfect stress relief, thank you!",2026-02-12
+1237,2,78.78,Reflexology,Service was standard.,2026-03-14
+1238,1,47.43,Swedish Massage,"Not worth the price, disappointing.",2025-07-22
+1239,4,179.35,Manicure,Best massage I've ever had.,2025-12-28
+1240,10,331.04,Reflexology,"Perfect stress relief, thank you!",2026-03-14
+1241,20,298.11,Wellness Package,"Fantastic, arrived on time and very skilled.",2026-03-15
+1242,2,82.12,Massage,"Worth every dollar, incredible service.",2026-03-12
+1243,1,141.32,Aromatherapy,Exceeded my expectations completely.,2026-03-27
+1244,8,187.26,Hot Stone Massage,,2026-02-09
+1245,2,47.07,Manicure,"Average experience, might try again.",2025-04-22
+1246,,177.06,Wellness Package,Too expensive for what you get.,2025-12-20
+1247,7,263.56,Deep Tissue Massage,"Fantastic, arrived on time and very skilled.",2026-02-08
+1248,5,90.41,Facial,,2025-11-07
+1249,,332.43,Hot Stone Massage,Best massage I've ever had.,2026-03-08
+1250,3,73.63,Facial,Too expensive for what you get.,2026-03-11
+1251,3,76.19,Facial,Quality has dropped compared to last time.,2025-04-10
+1252,6,245.64,Swedish Massage,"Had to reschedule twice, very inconvenient.",2026-02-27
+1253,3,132.56,Deep Tissue Massage,"Had to reschedule twice, very inconvenient.",2026-03-08
+1254,1,141.72,Massage,Exceeded my expectations completely.,2026-03-29
+1255,13,549.07,Facial,"Fantastic, arrived on time and very skilled.",2026-03-18
+1256,3,134.41,Aromatherapy,Too expensive for what you get.,2025-11-27
+1257,5,229.19,Massage,"Absolutely loved it, will book again!",2026-02-04
+1258,8,577.1,Pedicure,"Highly recommend, therapist was excellent.",2026-03-30
+1259,6,124.94,Aromatherapy,Too expensive for what you get.,2025-10-09
+1260,3,137.46,Reflexology,"Fantastic, arrived on time and very skilled.",2026-03-28
+1261,11,542.19,Massage,"Highly recommend, therapist was excellent.",2026-03-08
+1262,6,199.5,Wellness Package,Best massage I've ever had.,2026-03-06
+1263,18,396.73,Massage,"Perfect stress relief, thank you!",2026-03-08
+1264,3,109.37,Aromatherapy,Too expensive for what you get.,2026-01-26
+1265,16,597.72,Swedish Massage,Best massage I've ever had.,2026-03-25
+1266,7,325.25,Manicure,"Perfect stress relief, thank you!",2026-02-14
+1267,4,155.12,Manicure,,2025-12-08
+1268,9,213.75,Aromatherapy,"Worth every dollar, incredible service.",2026-03-02
+1269,6,210.15,Wellness Package,Too expensive for what you get.,2026-02-11
+1270,4,126.61,Deep Tissue Massage,"Worth every dollar, incredible service.",2025-12-30
+1271,19,540.29,Hot Stone Massage,"Worth every dollar, incredible service.",2026-03-31
+1272,9,294.86,Deep Tissue Massage,"Perfect stress relief, thank you!",2026-02-21
+1273,1,86.23,Swedish Massage,"Worth every dollar, incredible service.",2025-09-03
+1274,6,260.42,Hot Stone Massage,"Worth every dollar, incredible service.",2026-02-07
+1275,8,243.2,Swedish Massage,"Perfect stress relief, thank you!",2026-02-05
+1276,5,262.5,Swedish Massage,,2026-03-14
+1277,2,65.24,Deep Tissue Massage,"Had to reschedule twice, very inconvenient.",2026-03-22
+1278,2,45.44,Swedish Massage,"Absolutely loved it, will book again!",2025-05-31
+1279,6,294.06,Wellness Package,,2026-02-25
+1280,3,193.42,Massage,"Decent service, met expectations.",2025-11-07
+1281,1,71.87,Couples Massage,Therapist arrived late and seemed rushed.,2026-03-18
+1282,6,81.89,Manicure,,2025-11-24
+1283,1,60.13,Reflexology,Quality has dropped compared to last time.,2025-04-08
+1284,10,334.34,Manicure,"Absolutely loved it, will book again!",2026-03-13
+1285,8,241.8,Swedish Massage,"Perfect stress relief, thank you!",2026-03-13
+1286,3,75.58,Aromatherapy,Exceeded my expectations completely.,2025-09-10
+1287,1,99.99,Reflexology,"Fantastic, arrived on time and very skilled.",2026-03-19
+1288,1,43.79,Body Scrub,"Fine, nothing outstanding but okay.",2025-04-09
+1289,9,,Wellness Package,,2026-03-26
+1290,19,537.32,Facial,"Highly recommend, therapist was excellent.",2026-03-03
+1291,9,216.35,Swedish Massage,"Worth every dollar, incredible service.",2026-02-08
+1292,2,55.37,Deep Tissue Massage,Exceeded my expectations completely.,2026-03-19
+1293,5,83.56,Pedicure,Therapist arrived late and seemed rushed.,2025-12-28
+1294,9,282.13,Body Scrub,"Highly recommend, therapist was excellent.",2026-03-23
+1295,,306.78,Swedish Massage,"Worth every dollar, incredible service.",2026-03-19
+1296,7,302.27,Wellness Package,Best massage I've ever had.,2026-03-22
+1297,3,90.75,Facial,"Had to reschedule twice, very inconvenient.",2025-11-22
+1298,8,305.83,Manicure,"Okay overall, some improvements needed.",2026-02-10
+1299,1,63.88,Hot Stone Massage,"Fine, nothing outstanding but okay.",2026-03-23
+1300,5,222.22,Swedish Massage,Quality has dropped compared to last time.,2026-03-13
+1301,8,582.09,Body Scrub,"Worth every dollar, incredible service.",2026-03-22
+1302,3,147.42,Hot Stone Massage,"Worth every dollar, incredible service.",2026-03-28
+1303,8,343.75,Swedish Massage,Exceeded my expectations completely.,2026-03-10
+1304,7,313.3,Couples Massage,Very professional and relaxing experience.,2026-03-03
+1305,9,155.38,Pedicure,Exceeded my expectations completely.,2026-02-10
+1306,20,528.27,Pedicure,"Worth every dollar, incredible service.",2026-03-11
+1307,2,57.4,Pedicure,"Okay overall, some improvements needed.",2026-03-13
+1308,3,53.68,Swedish Massage,"Fantastic, arrived on time and very skilled.",2026-03-21
+1309,3,116.47,Reflexology,,2026-03-27
+1310,7,343.14,Facial,"Absolutely loved it, will book again!",2026-03-01
+1311,7,106.52,Aromatherapy,Exceeded my expectations completely.,2025-12-15
+1312,5,246.55,Aromatherapy,"Average experience, might try again.",2026-03-10
+1313,8,306.85,Pedicure,Very professional and relaxing experience.,2026-02-23
+1314,7,158.94,Facial,"Absolutely loved it, will book again!",2026-02-11
+1315,10,198.78,Manicure,"Fantastic, arrived on time and very skilled.",2026-03-17
+1316,3,68.45,Reflexology,Quality has dropped compared to last time.,2026-03-12
+1317,6,126.66,Deep Tissue Massage,"Absolutely loved it, will book again!",2025-11-02
+1318,7,102.44,Deep Tissue Massage,Exceeded my expectations completely.,2025-12-21
+1319,2,65.82,Aromatherapy,"Okay overall, some improvements needed.",2025-04-30
+1320,10,291.2,Body Scrub,Best massage I've ever had.,2026-03-09
+1321,6,224.66,Manicure,Exceeded my expectations completely.,2026-03-19
+1322,10,257.48,Wellness Package,"Highly recommend, therapist was excellent.",2026-02-15
+1323,3,55.36,Massage,"Fine, nothing outstanding but okay.",2026-03-21
+1324,6,129.1,Aromatherapy,Too expensive for what you get.,2025-11-30
+1325,2,53.27,Manicure,"Not worth the price, disappointing.",2026-03-25
+1326,3,101.08,Facial,Best massage I've ever had.,2026-03-14
+1327,1,126.0,Manicure,Quality has dropped compared to last time.,2026-03-18
+1328,2,137.48,Pedicure,Therapist arrived late and seemed rushed.,2026-03-31
+1329,1,42.59,Swedish Massage,Service was okay but nothing special.,2025-05-06
+1330,4,177.62,Massage,Service was okay but nothing special.,2025-10-20
+1331,10,208.53,Hot Stone Massage,Service was standard.,2026-02-20
+1332,20,524.99,Massage,"Absolutely loved it, will book again!",2026-03-03
+1333,10,214.42,Reflexology,"Worth every dollar, incredible service.",2026-03-13
+1334,6,89.06,Facial,Exceeded my expectations completely.,2025-10-22
+1335,8,215.46,Swedish Massage,Best massage I've ever had.,2026-03-28
+1336,5,309.14,Deep Tissue Massage,"Fantastic, arrived on time and very skilled.",2026-03-03
+1337,9,265.59,Pedicure,"Fine, nothing outstanding but okay.",2026-02-20
+1338,,542.85,Facial,,2026-04-01
+1339,1,89.74,Reflexology,"Not worth the price, disappointing.",2025-08-31
+1340,2,58.24,Reflexology,"Had to reschedule twice, very inconvenient.",2026-03-11
+1341,2,115.55,Facial,Too expensive for what you get.,2026-03-10
+1342,6,81.11,Couples Massage,Service was standard.,2025-11-03
+1343,14,281.27,Facial,Very professional and relaxing experience.,2026-03-07
+1344,1,,Wellness Package,"Not worth the price, disappointing.",2026-03-11
+1345,4,155.37,Aromatherapy,"Had to reschedule twice, very inconvenient.",2026-01-12
+1346,20,293.11,Aromatherapy,Very professional and relaxing experience.,2026-03-09
+1347,5,199.63,Body Scrub,"Had to reschedule twice, very inconvenient.",2026-02-18
+1348,2,70.54,Manicure,Quality has dropped compared to last time.,2026-03-13
+1349,1,59.69,Deep Tissue Massage,"Fine, nothing outstanding but okay.",2025-09-05
+1350,13,576.87,Aromatherapy,Service was standard.,2026-03-28
+1351,8,,Facial,"Absolutely loved it, will book again!",2026-02-07
+1352,2,60.4,Swedish Massage,"Average experience, might try again.",2025-04-26
+1353,7,153.93,Facial,"Highly recommend, therapist was excellent.",2025-12-27
+1354,7,228.15,Reflexology,"Fantastic, arrived on time and very skilled.",2026-02-16
+1355,1,33.47,Aromatherapy,Expected more for the cost.,2025-09-11
+1356,3,67.56,Swedish Massage,Service was okay but nothing special.,2026-04-01
+1357,5,100.04,Swedish Massage,Best massage I've ever had.,2026-01-15
+1358,8,204.4,Hot Stone Massage,Exceeded my expectations completely.,2026-03-24
+1359,3,139.95,Wellness Package,"Fantastic, arrived on time and very skilled.",2025-11-20
+1360,1,,Massage,Therapist arrived late and seemed rushed.,2026-03-16
+1361,6,185.79,Massage,Expected more for the cost.,2026-02-02
+1362,6,233.25,Couples Massage,Best massage I've ever had.,2026-02-10
+1363,1,67.93,Manicure,Therapist arrived late and seemed rushed.,2026-03-07
+1364,7,215.46,Pedicure,"Absolutely loved it, will book again!",2026-02-21
+1365,1,96.39,Pedicure,"Worth every dollar, incredible service.",2026-03-14
+1366,1,50.64,Massage,Too expensive for what you get.,2026-03-19
+1367,13,250.51,Aromatherapy,Service was standard.,2026-03-11
+1368,2,59.52,Wellness Package,Best massage I've ever had.,2025-09-18
+1369,2,120.08,Pedicure,Very professional and relaxing experience.,2026-03-21
+1370,1,109.19,Aromatherapy,"Highly recommend, therapist was excellent.",2026-03-31
+1371,8,290.15,Couples Massage,Best massage I've ever had.,2026-02-09
+1372,20,454.65,Facial,"Fantastic, arrived on time and very skilled.",2026-03-28
+1373,6,240.38,Hot Stone Massage,Service was standard.,2026-02-27
+1374,3,54.03,Couples Massage,Service was okay but nothing special.,2026-03-06
+1375,5,111.22,Massage,Exceeded my expectations completely.,2026-01-09
+1376,9,531.36,Facial,"Absolutely loved it, will book again!",2026-03-28
+1377,8,224.45,Reflexology,Best massage I've ever had.,2026-02-16
+1378,9,319.21,Pedicure,"Fine, nothing outstanding but okay.",2026-03-12
+1379,5,338.46,Wellness Package,,2026-03-25
+1380,18,399.33,Deep Tissue Massage,,2026-03-21
+1381,17,465.94,Hot Stone Massage,"Perfect stress relief, thank you!",2026-03-12
+1382,6,233.85,Manicure,"Highly recommend, therapist was excellent.",2026-02-15
+1383,3,51.55,Pedicure,Service was okay but nothing special.,2025-05-17
+1384,7,269.42,Hot Stone Massage,"Highly recommend, therapist was excellent.",2026-03-27
+1385,4,196.88,Deep Tissue Massage,"Highly recommend, therapist was excellent.",2026-01-19
+1386,11,451.49,Aromatherapy,Very professional and relaxing experience.,2026-03-07
+1387,7,311.24,Couples Massage,,2026-02-12
+1388,4,147.57,Pedicure,Expected more for the cost.,2026-01-07
+1389,6,153.99,Massage,"Worth every dollar, incredible service.",2026-02-26
+1390,2,55.96,Body Scrub,Best massage I've ever had.,2026-03-28
+1391,1,52.42,Aromatherapy,"Okay overall, some improvements needed.",2025-04-17
+1392,8,308.37,Reflexology,Best massage I've ever had.,2026-02-25
+1393,2,43.39,Wellness Package,"Had to reschedule twice, very inconvenient.",2025-05-06
+1394,3,144.87,Body Scrub,"Fine, nothing outstanding but okay.",2026-03-20
+1395,7,92.49,Wellness Package,Best massage I've ever had.,2025-11-29
+1396,5,314.33,Reflexology,"Perfect stress relief, thank you!",2026-02-14
+1397,5,220.1,Facial,,2026-02-06
+1398,8,248.62,Couples Massage,"Highly recommend, therapist was excellent.",2026-03-04
+1399,4,99.52,Massage,,2026-01-22
+1400,8,182.18,Manicure,"Okay overall, some improvements needed.",2026-03-24
+1401,3,31.86,Wellness Package,,2025-04-19
+1402,6,231.86,Swedish Massage,Expected more for the cost.,2026-02-21
+1403,17,442.38,Wellness Package,"Highly recommend, therapist was excellent.",2026-03-17
+1404,3,98.03,Massage,"Absolutely loved it, will book again!",2026-03-29
+1405,2,128.49,Pedicure,"Highly recommend, therapist was excellent.",2026-03-17
+1406,8,223.88,Massage,"Absolutely loved it, will book again!",2026-02-28
+1407,4,170.27,Facial,"Average experience, might try again.",2025-11-07
+1408,1,105.36,Aromatherapy,Exceeded my expectations completely.,2026-03-06
+1409,3,82.9,Hot Stone Massage,"Average experience, might try again.",2025-06-04
+1410,7,176.05,Body Scrub,"Worth every dollar, incredible service.",2025-11-06
+1411,1,78.51,Massage,Quality has dropped compared to last time.,2025-09-01
+1412,1,133.41,Couples Massage,Very professional and relaxing experience.,2026-03-24
+1413,7,321.32,Pedicure,,2026-02-23
+1414,6,93.5,Wellness Package,Service was okay but nothing special.,2026-01-12
+1415,3,76.77,Manicure,"Fantastic, arrived on time and very skilled.",2025-07-22
+1416,6,84.5,Aromatherapy,"Okay overall, some improvements needed.",2025-12-27
+1417,7,288.1,Swedish Massage,"Perfect stress relief, thank you!",2026-03-25
+1418,2,81.09,Pedicure,"Perfect stress relief, thank you!",2026-03-06
+1419,19,405.09,Couples Massage,"Absolutely loved it, will book again!",2026-03-06
+1420,6,168.91,Manicure,"Fantastic, arrived on time and very skilled.",2025-10-26
+1421,9,230.68,Manicure,"Okay overall, some improvements needed.",2026-02-07
+1422,5,199.9,Massage,"Fantastic, arrived on time and very skilled.",2026-02-27
+1423,3,161.74,Couples Massage,Therapist arrived late and seemed rushed.,2026-01-01
+1424,5,121.31,Hot Stone Massage,"Average experience, might try again.",2025-10-16
+1425,4,182.85,Deep Tissue Massage,"Absolutely loved it, will book again!",2025-11-10
+1426,3,50.89,Wellness Package,"Absolutely loved it, will book again!",2026-03-03
+1427,5,165.53,Reflexology,Best massage I've ever had.,2025-11-02
+1428,8,,Body Scrub,"Worth every dollar, incredible service.",2026-02-23
+1429,2,63.69,Body Scrub,"Not worth the price, disappointing.",2025-05-04
+1430,3,49.51,Hot Stone Massage,"Absolutely loved it, will book again!",2025-07-25
+1431,20,334.11,Body Scrub,"Worth every dollar, incredible service.",2026-03-31
+1432,2,75.94,Aromatherapy,"Had to reschedule twice, very inconvenient.",2026-03-19
+1433,2,122.65,Reflexology,Service was standard.,2026-03-25
+1434,7,319.08,Reflexology,"Okay overall, some improvements needed.",2026-02-03
+1435,3,130.83,Wellness Package,"Worth every dollar, incredible service.",2026-03-08
+1436,2,77.29,Couples Massage,Therapist arrived late and seemed rushed.,2025-07-11
+1437,18,454.25,Facial,"Perfect stress relief, thank you!",2026-03-13
+1438,7,232.62,Wellness Package,"Worth every dollar, incredible service.",2026-02-01
+1439,2,38.59,Wellness Package,"Worth every dollar, incredible service.",2025-04-03
+1440,5,150.94,Deep Tissue Massage,,2026-03-11
+1441,,111.45,Aromatherapy,"Had to reschedule twice, very inconvenient.",2026-03-12
+1442,5,194.01,Couples Massage,"Not worth the price, disappointing.",2025-10-09
+1443,10,325.4,Wellness Package,Very professional and relaxing experience.,2026-03-09
+1444,2,144.85,Swedish Massage,"Average experience, might try again.",2026-03-18
+1445,2,89.77,Couples Massage,"Worth every dollar, incredible service.",2025-05-31
+1446,4,106.92,Deep Tissue Massage,"Decent service, met expectations.",2026-01-15
+1447,1,87.52,Hot Stone Massage,"Worth every dollar, incredible service.",2026-03-12
+1448,3,133.61,Swedish Massage,Service was standard.,2026-03-31
+1449,4,104.66,Reflexology,"Decent service, met expectations.",2025-11-05
+1450,9,290.15,Facial,"Absolutely loved it, will book again!",2026-03-02
+1451,11,463.15,Hot Stone Massage,"Average experience, might try again.",2026-03-08
+1452,,259.63,Swedish Massage,,2026-03-15
+1453,9,542.33,Pedicure,"Worth every dollar, incredible service.",2026-03-11
+1454,2,114.43,Hot Stone Massage,Therapist arrived late and seemed rushed.,2026-03-18
+1455,12,376.08,Couples Massage,"Fantastic, arrived on time and very skilled.",2026-03-11
+1456,10,482.17,Couples Massage,Very professional and relaxing experience.,2026-03-27
+1457,2,131.5,Facial,"Had to reschedule twice, very inconvenient.",2026-03-27
+1458,2,129.99,Wellness Package,Expected more for the cost.,2026-03-12
+1459,1,91.6,Pedicure,"Fantastic, arrived on time and very skilled.",2026-03-14
+1460,3,52.88,Swedish Massage,Service was okay but nothing special.,2026-03-11
+1461,3,111.39,Massage,"Not worth the price, disappointing.",2025-12-22
+1462,3,82.39,Manicure,"Had to reschedule twice, very inconvenient.",2025-05-24
+1463,10,278.28,Manicure,"Okay overall, some improvements needed.",2026-03-19
+1464,8,320.37,Wellness Package,Best massage I've ever had.,2026-02-01
+1465,9,194.54,Aromatherapy,"Worth every dollar, incredible service.",2026-02-15
+1466,,182.79,Couples Massage,Service was standard.,2025-12-05
+1467,3,146.86,Facial,"Had to reschedule twice, very inconvenient.",2026-01-31
+1468,6,194.04,Massage,"Highly recommend, therapist was excellent.",2025-12-16
+1469,5,165.91,Facial,,2026-01-17
+1470,3,102.2,Facial,"Fine, nothing outstanding but okay.",2026-03-10
+1471,2,60.7,Deep Tissue Massage,Quality has dropped compared to last time.,2026-03-13
+1472,1,121.68,Aromatherapy,Therapist arrived late and seemed rushed.,2026-03-29
+1473,2,,Manicure,Service was okay but nothing special.,2026-03-14
+1474,6,180.66,Manicure,,2025-12-01
+1475,18,460.19,Couples Massage,"Absolutely loved it, will book again!",2026-03-04
+1476,1,77.36,Hot Stone Massage,"Decent service, met expectations.",2026-03-22
+1477,3,47.93,Manicure,"Perfect stress relief, thank you!",2025-04-07
+1478,6,274.83,Reflexology,Very professional and relaxing experience.,2026-03-10
+1479,1,60.23,Reflexology,Expected more for the cost.,2025-04-09
+1480,,160.91,Manicure,Very professional and relaxing experience.,2025-10-09
+1481,14,300.86,Massage,Exceeded my expectations completely.,2026-03-11
+1482,1,133.94,Hot Stone Massage,Quality has dropped compared to last time.,2026-03-10
+1483,18,508.82,Deep Tissue Massage,"Perfect stress relief, thank you!",2026-03-05
+1484,3,78.76,Massage,Exceeded my expectations completely.,2026-03-11
+1485,9,160.76,Hot Stone Massage,Exceeded my expectations completely.,2026-02-09
+1486,3,120.46,Couples Massage,Service was okay but nothing special.,2026-03-12
+1487,2,56.93,Facial,"Had to reschedule twice, very inconvenient.",2025-04-12
+1488,12,,Wellness Package,Best massage I've ever had.,2026-03-28
+1489,1,39.22,Body Scrub,Therapist arrived late and seemed rushed.,2025-07-13
+1490,9,260.03,Swedish Massage,Best massage I've ever had.,2026-03-24
+1491,1,91.59,Aromatherapy,"Not worth the price, disappointing.",2026-03-15
+1492,7,193.69,Body Scrub,"Absolutely loved it, will book again!",2026-02-08
+1493,3,160.27,Deep Tissue Massage,Quality has dropped compared to last time.,2025-12-05
+1494,2,88.14,Facial,"Had to reschedule twice, very inconvenient.",2026-03-07
+1495,5,141.72,Pedicure,,2025-11-27
+1496,3,100.09,Manicure,,2025-10-25
+1497,3,92.42,Deep Tissue Massage,Expected more for the cost.,2026-03-29
+1498,3,169.63,Massage,Too expensive for what you get.,2026-01-12
+1499,7,261.62,Deep Tissue Massage,,2026-02-20
+1500,3,126.74,Manicure,"Decent service, met expectations.",2026-01-16
