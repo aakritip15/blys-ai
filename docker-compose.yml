@@ -1,0 +1,52 @@
+version: "3.9"
+
+services: 
+  # Backend: FastAPI 
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: blys-api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes: 
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - blys-network
+    restart: unless-stopped
+ 
+  # Frontend: Streamlit 
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: blys-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - API_BASE_URL=http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes: 
+      - ./reports:/app/reports
+    networks:
+      - blys-network
+    restart: unless-stopped
+
+networks:
+  blys-network:
+    driver: bridge
