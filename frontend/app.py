@@ -1,36 +1,20 @@
-"""
-app.py — Blyss Wellness AI Frontend
-=====================================
-Streamlit interface for the Blyss FastAPI endpoints.
-
-Run:
-    streamlit run app.py
-
-Requires:
-    pip install streamlit requests
-"""
-
 import time
 import uuid
 import requests
 import streamlit as st
 
-# ── Page Config ────────────────────────────────────────────────────────────────
+#   Page Config  
 st.set_page_config(
     page_title="Blyss AI",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-# ── Constants ──────────────────────────────────────────────────────────────────
-# For Docker: use "http://backend:8000" (service name in compose)
-# For local dev: use "http://localhost:8000"
 import os
 API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000")
-REPORT_PATH = "../reports/customer_behaviour_report.pdf"  # adjust as needed
+REPORT_PATH = os.path.join(os.path.dirname(__file__), "..", "reports", "customer_behaviour_report.pdf")  # adjust as needed
 
-# ── Styling ────────────────────────────────────────────────────────────────────
+#   Styling  
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap');
@@ -273,6 +257,8 @@ html, body, [class*="css"] {
 .avatar-user { background: #E8E6DF; color: #444441; }
 
 .msg-bubble {
+    display: inline-block;  
+    width: fit-content;
     max-width: 72%;
     padding: 10px 14px;
     border-radius: 14px;
@@ -407,7 +393,7 @@ div[data-testid="stRadio"] > div {
 """, unsafe_allow_html=True)
 
 
-# ── Helpers ────────────────────────────────────────────────────────────────────
+#   Helpers  
 def api_get(path: str, timeout: int = 6):
     try:
         r = requests.get(f"{API_BASE}{path}", timeout=timeout)
@@ -450,7 +436,7 @@ def check_health():
     return data, err
 
 
-# ── Session State ──────────────────────────────────────────────────────────────
+#   Session State  
 if "chat_session_id"  not in st.session_state:
     st.session_state.chat_session_id  = None
 if "chat_history"     not in st.session_state:
@@ -463,7 +449,7 @@ if "active_page"      not in st.session_state:
     st.session_state.active_page      = "Chatbot"
 
 
-# ── Sidebar ────────────────────────────────────────────────────────────────────
+#   Sidebar  
 with st.sidebar:
     st.markdown("""
     <div class="brand-header">
@@ -475,7 +461,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # ── Health check (cached 30s) ──────────────────────────────────────────────
+    #   Health check (cached 30s)  
     now = time.time()
     if now - st.session_state.health_ts > 30:
         hdata, herr = check_health()
@@ -505,7 +491,6 @@ with st.sidebar:
         "💬  Chatbot":        "Chatbot",
         "✦   Recommendations": "Recommendations",
         "📊  Analysis Report": "Report",
-        "⚙   API Health":      "Health",
     }
     for label, key in pages.items():
         if st.button(label, key=f"nav_{key}", use_container_width=True):
@@ -529,7 +514,7 @@ with st.sidebar:
         """, unsafe_allow_html=True)
 
 
-# ── Page: Chatbot ──────────────────────────────────────────────────────────────
+#   Page: Chatbot  
 if st.session_state.active_page == "Chatbot":
 
     st.markdown('<div class="page-heading">AI Wellness Assistant</div>', unsafe_allow_html=True)
@@ -538,7 +523,7 @@ if st.session_state.active_page == "Chatbot":
     col_chat, col_info = st.columns([2, 1], gap="large")
 
     with col_chat:
-        # ── Chat window ────────────────────────────────────────────────────────
+        #   Chat window  
         st.markdown("""
         <div class="chat-container">
           <div class="chat-header">
@@ -590,7 +575,7 @@ if st.session_state.active_page == "Chatbot":
                         </div>
                         """, unsafe_allow_html=True)
 
-        # ── Quick suggestions ──────────────────────────────────────────────────
+        #   Quick suggestions  
         QUICK_MESSAGES = [
             "Can I reschedule my booking?",
             "I'd like to book a Swedish Massage",
@@ -606,7 +591,7 @@ if st.session_state.active_page == "Chatbot":
                     st.session_state._pending_message = qmsg
         st.markdown('</div>', unsafe_allow_html=True)
 
-        # ── Input row ──────────────────────────────────────────────────────────
+        #  Input row 
         with st.form("chat_form", clear_on_submit=True):
             inp_col, btn_col = st.columns([5, 1])
             with inp_col:
@@ -655,7 +640,7 @@ if st.session_state.active_page == "Chatbot":
                 })
             st.rerun()
 
-        # ── Session controls ───────────────────────────────────────────────────
+        #  Session controls 
         ctrl_col1, ctrl_col2 = st.columns(2)
         with ctrl_col1:
             if st.button("🗑  Clear conversation", use_container_width=True):
@@ -674,7 +659,7 @@ if st.session_state.active_page == "Chatbot":
                 </div>
                 """, unsafe_allow_html=True)
 
-    # ── Right info panel ───────────────────────────────────────────────────────
+    #  Right info panel 
     with col_info:
         st.markdown("""
         <div style="background:#FFFFFF; border:1px solid #E8E6DF; border-radius:14px; padding:1.25rem;">
@@ -720,7 +705,7 @@ if st.session_state.active_page == "Chatbot":
         """, unsafe_allow_html=True)
 
 
-# ── Page: Recommendations ──────────────────────────────────────────────────────
+#  Page: Recommendations 
 elif st.session_state.active_page == "Recommendations":
 
     st.markdown('<div class="page-heading">Service Recommendations</div>', unsafe_allow_html=True)
@@ -731,12 +716,12 @@ elif st.session_state.active_page == "Recommendations":
     with in_col1:
         customer_id = st.text_input(
             "Customer ID",
-            value="CUST_001",
-            placeholder="e.g. CUST_042",
+            value="1253",
+            placeholder="e.g. 1096",
             help="Enter an existing customer ID from the training dataset.",
         )
     with in_col2:
-        top_n = st.selectbox("Top N results", options=[3, 5, 7, 10], index=1)
+        top_n = st.selectbox("Top N results", options=[1,2,3], index=2)
     with in_col3:
         st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
         run_btn = st.button("Get recommendations", use_container_width=True)
@@ -760,7 +745,7 @@ elif st.session_state.active_page == "Recommendations":
                 model_used      = data.get("model_used", "—")
                 is_known        = data.get("is_known_customer", False)
 
-                # ── Metrics strip ──────────────────────────────────────────────
+                #  Metrics strip  
                 st.markdown(f"""
                 <div class="metric-strip">
                     <div class="metric-card">
@@ -784,7 +769,7 @@ elif st.session_state.active_page == "Recommendations":
                 if not is_known:
                     st.info("Customer not found in training data — showing popularity-based recommendations.")
 
-                # ── Recommendation cards ───────────────────────────────────────
+                #  Recommendation cards 
                 for i, rec in enumerate(recs):
                     svc    = rec.get("service", "—")
                     score  = rec.get("score", 0.0)
@@ -810,13 +795,13 @@ elif st.session_state.active_page == "Recommendations":
         """, unsafe_allow_html=True)
 
 
-# ── Page: Analysis Report ──────────────────────────────────────────────────────
+#  Page: Analysis Report 
 elif st.session_state.active_page == "Report":
 
     st.markdown('<div class="page-heading">Customer Analysis Report</div>', unsafe_allow_html=True)
     st.markdown('<div class="page-subheading">Insights from customer booking behaviour, sentiment analysis, and service trends.</div>', unsafe_allow_html=True)
 
-    # ── Report card ────────────────────────────────────────────────────────────
+    #  Report card 
     st.markdown("""
     <div class="report-card" style="margin-bottom:24px;">
         <div class="report-icon">📊</div>
@@ -828,7 +813,7 @@ elif st.session_state.active_page == "Report":
     """, unsafe_allow_html=True)
 
 
-    # ── Embedded report preview ────────────────────────────────────────────────
+    #  Embedded report preview 
     st.markdown("#### Preview")
     try:
         import base64
@@ -853,7 +838,7 @@ elif st.session_state.active_page == "Report":
         <div style="background:#FFF8E7; border:1px solid #FAC775; border-radius:12px; padding:1.25rem; margin-bottom:1rem;">
             <div style="font-size:13px; color:#854F0B; font-weight:500;">Report file not found</div>
             <div style="font-size:12px; color:#BA7517; margin-top:4px;">
-                Update the <code>REPORT_PATH</code> constant at the top of <code>app.py</code> to point to your HTML report file.
+                Update the <code>REPORT_PATH</code> constant at the top of <code>app.py</code> to point to your PDF report file.
                 <br>Current path: <code style="font-size:11px;">{REPORT_PATH}</code>
             </div>
         </div>
@@ -887,20 +872,20 @@ elif st.session_state.active_page == "Report":
             </div>
             """, unsafe_allow_html=True)
 
-    # ── Download report button ─────────────────────────────────────────────────────
+    #  Download report button 
     r_col1, r_col2 = st.columns([1, 2])
     with r_col1:
 
         if st.button("📥  Download report", use_container_width=True):
             try:
-                with open(REPORT_PATH, "r") as f:
-                    report_html = f.read()
+                with open(REPORT_PATH, "rb") as f:
+                    report_pdf = f.read()
 
                 st.download_button(
                     label="Click to download",
-                    data=report_html,
-                    file_name="blyss_customer_analysis_report.html",
-                    mime="text/html",
+                    data=report_pdf,
+                    file_name="blyss_customer_analysis_report.pdf",
+                    mime="application/pdf",
                 )
             except FileNotFoundError:
                 st.error(f"Report file not found at `{REPORT_PATH}`. Update the `REPORT_PATH` constant in app.py.")
@@ -908,87 +893,3 @@ elif st.session_state.active_page == "Report":
     st.markdown("<hr class='thin-divider'>", unsafe_allow_html=True)
 
 
-
-# ── Page: API Health ───────────────────────────────────────────────────────────
-elif st.session_state.active_page == "Health":
-
-    st.markdown('<div class="page-heading">API Health</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-subheading">Live status of the Blyss FastAPI service and loaded models.</div>', unsafe_allow_html=True)
-
-    if st.button("Refresh status"):
-        hdata, herr = check_health()
-        st.session_state.health_cache = (hdata, herr)
-        st.session_state.health_ts    = time.time()
-        st.rerun()
-
-    hdata, herr = st.session_state.health_cache or (None, None)
-
-    if herr and not hdata:
-        st.error(f"Could not reach API: {herr}")
-    elif hdata:
-        status_color = "#639922" if hdata.get("status") == "ok" else "#E24B4A"
-        status_bg    = "#EAF3DE" if hdata.get("status") == "ok" else "#FCEBEB"
-        status_text  = "#3B6D11" if hdata.get("status") == "ok" else "#A32D2D"
-
-        st.markdown(f"""
-        <div style="display:inline-flex; align-items:center; gap:8px; background:{status_bg}; padding:8px 16px; border-radius:20px; margin-bottom:1.5rem;">
-            <div style="width:9px; height:9px; border-radius:50%; background:{status_color};"></div>
-            <span style="font-weight:500; font-size:14px; color:{status_text};">
-                API status: {hdata.get('status','unknown').upper()}
-            </span>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # ── Health metric cards ────────────────────────────────────────────────
-        st.markdown(f"""
-        <div class="metric-strip">
-            <div class="metric-card">
-                <div class="metric-label">Uptime</div>
-                <div class="metric-value">{int(hdata.get('uptime_seconds', 0))}<span style="font-size:14px; font-family:'DM Sans'; font-weight:400; color:#888780;"> s</span></div>
-                <div class="metric-detail">Since last restart</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Recommendation engine</div>
-                <div class="metric-value" style="font-size:15px; padding-top:8px;">{hdata.get('recommendation_engine','—')}</div>
-                <div class="metric-detail">Hybrid SVD + content model</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Chatbot</div>
-                <div class="metric-value" style="font-size:15px; padding-top:8px;">{hdata.get('chatbot','—')}</div>
-                <div class="metric-detail">CountVectorizer + SGD</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("<hr class='thin-divider'>", unsafe_allow_html=True)
-
-        # ── Endpoint table ─────────────────────────────────────────────────────
-        st.markdown("#### Available endpoints")
-        endpoints = [
-            ("POST", "/recommend",          "Get personalised service recommendations"),
-            ("POST", "/chatbot",            "Send a message to the AI assistant"),
-            ("DELETE", "/chatbot/session",  "Clear a conversation session"),
-            ("GET",  "/health",             "Service health check"),
-            ("GET",  "/",                   "API info and welcome"),
-            ("GET",  "/docs",               "Swagger UI interactive documentation"),
-        ]
-        method_colors = {
-            "GET":    ("#E6F1FB", "#0C447C"),
-            "POST":   ("#EAF3DE", "#3B6D11"),
-            "DELETE": ("#FCEBEB", "#A32D2D"),
-        }
-        for method, path, desc in endpoints:
-            bg, fg = method_colors.get(method, ("#F4F3EF", "#444441"))
-            st.markdown(f"""
-            <div style="display:flex; align-items:center; gap:14px; padding:12px 14px; background:#FFFFFF; border:1px solid #E8E6DF; border-radius:9px; margin-bottom:7px;">
-                <span style="font-size:11px; font-weight:500; background:{bg}; color:{fg}; padding:3px 9px; border-radius:5px; min-width:52px; text-align:center;">{method}</span>
-                <code style="font-size:13px; flex:1;">{path}</code>
-                <span style="font-size:12px; color:#888780;">{desc}</span>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown(f"""
-        <div style="margin-top:1rem; padding:12px 14px; background:#F4F3EF; border-radius:9px; font-size:12px; color:#5F5E5A;">
-            Swagger UI available at <a href="{API_BASE}/docs" target="_blank" style="color:#185FA5;">{API_BASE}/docs</a>
-        </div>
-        """, unsafe_allow_html=True)

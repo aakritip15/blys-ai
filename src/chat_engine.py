@@ -2,97 +2,45 @@ from __future__ import annotations
 
 import logging
 import pickle
+import joblib
 import re
 import uuid
+import random
 from dataclasses import dataclass, field
+from enum import Enum, auto
 from pathlib import Path
 from typing import Any
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-# ── Paths ────────────────────────────────────────────────────────────────────
+#  Paths 
 _BASE       = Path(__file__).parent
-_MODEL_PATH = _BASE / "outputs" / "models" / "chatbot_model.pkl"
+_MODEL_PATH = _BASE.parent / "models" / "chatbot_model.pkl"
 
-# ── Intent → response templates ──────────────────────────────────────────────
-_RESPONSES: dict[str, list[str]] = {
-    "greeting": [
-        "Hi there! Welcome to Blyss 🌿 How can I help you today?",
-        "Hello! I'm your Blyss wellness assistant. What can I do for you?",
-    ],
-    "book_service": [
-        "I'd love to help you book a session! Which service are you interested in — "
-        "massage, aromatherapy, reflexology, or something else?",
-        "Great choice! To confirm your booking I'll need: your preferred service, date, and time. "
-        "What service would you like?",
-    ],
-    "service_inquiry": [
-        "We offer a wide range of wellness services including Swedish Massage, Deep Tissue, "
-        "Hot Stone, Aromatherapy, Reflexology, Sports Massage, Prenatal Massage, and Couples Massage. "
-        "Which one would you like to know more about?",
-    ],
-    "pricing": [
-        "Our pricing varies by service and duration:\n"
-        "  • 60-min massage: from AUD 120\n"
-        "  • 90-min massage: from AUD 160\n"
-        "  • Aromatherapy (60 min): AUD 130\n"
-        "  • Couples Massage (60 min): AUD 230\n\n"
-        "Would you like to book a session?",
-    ],
-    "cancellation": [
-        "You can cancel or reschedule up to 4 hours before your appointment at no charge. "
-        "Cancellations within 4 hours incur a 50% fee. "
-        "Would you like help rescheduling instead?",
-    ],
-    "recommendation": [
-        "Based on popular choices, I'd suggest our Swedish Massage for relaxation or "
-        "Deep Tissue if you have muscle tension. "
-        "Would you like me to pull personalised recommendations using your customer ID?",
-    ],
-    "complaint": [
-        "I'm really sorry to hear that. Your experience matters to us. "
-        "Could you share more details so I can escalate this to our team?",
-        "Thank you for letting us know. I'll flag this for our quality team right away. "
-        "Can I get your booking reference number?",
-    ],
-    "feedback": [
-        "Thank you so much for your feedback — we genuinely appreciate it! "
-        "Is there anything else I can help you with?",
-    ],
-    "farewell": [
-        "Take care! We look forward to seeing you again at Blyss 🌿",
-        "Goodbye! Don't forget to treat yourself — you deserve it. 😊",
-    ],
-    "fallback": [
-        "I didn't quite catch that. Could you rephrase? I can help with bookings, "
-        "services, pricing, cancellations, and recommendations.",
-        "Sorry, I'm not sure I understand. Try asking about our services, pricing, or bookings!",
-    ],
-}
-
-# Round-robin index per intent so responses vary across turns
-_response_idx: dict[str, int] = {k: 0 for k in _RESPONSES}
+#  Dialogue States (mirrors notebook ConversationState enum) 
+class DialogueState(Enum):
+    IDLE               = auto()
+    AWAIT_RESCHEDULE   = auto()
+    AWAIT_NEW_DATETIME = auto()
+    AWAIT_BOOK_SERVICE = auto()
+    AWAIT_BOOK_DATETIME= auto()
+    AWAIT_CANCEL_REF   = auto()
+    AWAIT_PRICE_SVC    = auto()
+    AWAIT_REC_PREF     = auto()
 
 
-def _pick_response(intent: str) -> str:
-    options = _RESPONSES.get(intent, _RESPONSES["fallback"])
-    idx = _response_idx.get(intent, 0)
-    response = options[idx % len(options)]
-    _response_idx[intent] = idx + 1
-    return response
-
-
-# ── Rule-based intent detection (fallback when model absent) ─────────────────
+#   Fallback rule-based intent detection 
 _RULES: list[tuple[re.Pattern, str]] = [
-    (re.compile(r"\b(hi|hello|hey|howdy|good\s*(morning|afternoon|evening))\b", re.I), "greeting"),
-    (re.compile(r"\b(bye|goodbye|see\s*you|later|farewell|thanks?\s*bye)\b", re.I), "farewell"),
-    (re.compile(r"\b(book|schedule|reserve|appointment|session)\b", re.I), "book_service"),
-    (re.compile(r"\b(price|cost|fee|how\s*much|rate|charges?)\b", re.I), "pricing"),
-    (re.compile(r"\b(cancel|reschedule|refund|postpone)\b", re.I), "cancellation"),
-    (re.compile(r"\b(recommend|suggest|best|top|popular|what.*should)\b", re.I), "recommendation"),
-    (re.compile(r"\b(services?|offer|menu|what.*you\s*do|massage|aromatherapy|reflexology)\b", re.I), "service_inquiry"),
-    (re.compile(r"\b(complain|issue|problem|unhappy|bad|worst|terrible|awful)\b", re.I), "complaint"),
-    (re.compile(r"\b(feedback|review|experience|loved|great|awesome|excellent)\b", re.I), "feedback"),
+    (re.compile(r"\b(hi|hello|hey|howdy|good\s*(morning|afternoon|evening)|greetings|hiya)\b", re.I), "greet"),
+    (re.compile(r"\b(bye|goodbye|see\s*you|later|farewell|cheers|take\s*care|all\s*set|thank\s*you\s*so\s*much|that'?s?\s*all|i'?m?\s*done)\b", re.I), "farewell"),
+    (re.compile(r"\b(yes|yeah|yep|sure|absolutely|of\s*course|go\s*ahead|correct|affirmative|ok\s*yes|sounds\s*good|confirmed|proceed|alright|i\s*agree)\b", re.I), "confirm_yes"),
+    (re.compile(r"\b(no\b|nope|no\s*thanks|i'?m?\s*good|not\s*really|don'?t\s*bother|i'?ll\s*pass|nah|forget\s*it|never\s*mind|not\s*interested)\b", re.I), "confirm_no"),
+    (re.compile(r"\b(reschedule|change.*appointment|move.*booking|shift.*booking|postpone|different.*date|different.*time)\b", re.I), "change_booking"),
+    (re.compile(r"\b(cancel|cancellation|remove.*appointment|call\s*off)\b", re.I), "cancel_booking"),
+    (re.compile(r"\b(book|schedule|reserve|appointment|session|make.*booking)\b", re.I), "make_booking"),
+    (re.compile(r"\b(price|cost|fee|how\s*much|rate|charges?|pricing|quote)\b", re.I), "check_price"),
+    (re.compile(r"\b(recommend|suggest|best|top|popular|what.*should|guide\s*me|help\s*me\s*choose)\b", re.I), "get_recommendation"),
 ]
 
 
@@ -103,41 +51,144 @@ def _rule_based_intent(text: str) -> str:
     return "fallback"
 
 
-# ── Conversation state ────────────────────────────────────────────────────────
+#   Entity extraction helpers  
+try:
+    import spacy
+    from spacy.matcher import PhraseMatcher
+    from dateutil import parser as date_parser
+    _NLP_AVAILABLE = True
+except ImportError:
+    _NLP_AVAILABLE = False
+    logger.warning("spaCy / dateutil not installed — entity extraction uses regex only.")
+
+
+def _build_phrase_matcher(svc_names: list[str]):
+    """Build a spaCy PhraseMatcher for the given service names, or None."""
+    if not _NLP_AVAILABLE or not svc_names:
+        return None, None
+    try:
+        nlp = spacy.load("en_core_web_sm")
+        matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+        patterns = [nlp.make_doc(n.lower()) for n in svc_names]
+        matcher.add("SERVICE", patterns)
+        return nlp, matcher
+    except Exception as exc:
+        logger.warning("spaCy model load failed: %s", exc)
+        return None, None
+
+
+def extract_service_regex(text: str, svc_names: list[str]) -> str | None:
+    """Fallback regex service extractor when spaCy is unavailable."""
+    lower = text.lower()
+    # Sort longest-first to prefer more specific matches
+    for name in sorted(svc_names, key=len, reverse=True):
+        if name.lower() in lower:
+            return name
+    return None
+
+
+def extract_datetime_from_text(text: str) -> datetime | None:
+    """
+    Parse a datetime from user text.
+    Tries regex patterns first, then dateutil fuzzy parse.
+    Returns None if nothing parseable found.
+    """
+    if _NLP_AVAILABLE:
+        from dateutil import parser as date_parser
+        patterns = [
+            r"\d{1,2}\s+[A-Za-z]+\s+\d{4}\s+\d{1,2}(?::\d{2})?\s*[aApP][mM]",
+            r"[A-Za-z]+\s+\d{1,2},?\s+\d{4}\s+(?:at\s+)?\d{1,2}(?::\d{2})?\s*[aApP][mM]",
+            r"\d{1,2}/\d{1,2}/\d{2,4}\s+\d{1,2}(?::\d{2})?\s*[aApP][mM]",
+        ]
+        for pat in patterns:
+            m = re.search(pat, text, re.IGNORECASE)
+            if m:
+                try:
+                    return date_parser.parse(m.group(), dayfirst=True)
+                except Exception:
+                    pass
+        try:
+            return date_parser.parse(text, dayfirst=True, fuzzy=True)
+        except Exception:
+            return None
+    else:
+        # Simple regex fallback without dateutil
+        m = re.search(
+            r"\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}|"
+            r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{1,2},?\s+\d{4}|"
+            r"\d{1,2}\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{4})\b",
+            text, re.IGNORECASE
+        )
+        return m.group() if m else None  # Return string when dateutil is absent
+
+
+def _format_dt(dt) -> str:
+    if isinstance(dt, datetime):
+        return dt.strftime("%d %b %Y at %I:%M %p")
+    return str(dt)  # fallback for plain string
+
+
+#   Price tier data (mirrors notebook defaults, overridden from pkl)  
+_DEFAULT_PRICE_GUIDE = {
+    "budget":  "$50 – $95",
+    "mid":     "$110 – $190",
+    "premium": "$220 – $380",
+}
+
+_DEFAULT_SVC_NAMES = [
+    "Swedish Massage", "Deep Tissue Massage", "Hot Stone Massage",
+    "Aromatherapy Massage", "Sports Massage", "Prenatal Massage",
+    "Couples Massage", "Classic Facial", "Anti-Aging Facial",
+    "Hydrating Facial", "Acne Treatment Facial", "Reflexology",
+    "Body Scrub & Wrap", "Lymphatic Drainage", "Wellness Package",
+    "Corporate Wellness Session", "Meditation & Breathwork",
+    "Infrared Sauna Session", "Cryotherapy", "Cupping Therapy",
+    "Reiki Healing", "Sound Bath Therapy", "Ayurvedic Treatment",
+    "Float Tank Session", "Stretching & Mobility Session",
+]
+
+
+#   Conversation state  
 @dataclass
 class ConversationState:
     session_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     history: list[dict[str, str]] = field(default_factory=list)
+    dialogue_state: DialogueState = field(default=DialogueState.IDLE)
+    booked_service: str | None = None
+    booked_at: Any = None         # datetime or raw string
     last_intent: str = ""
-    context: dict[str, Any] = field(default_factory=dict)  # e.g. pending service, booking slot
 
     def add_turn(self, role: str, text: str) -> None:
         self.history.append({"role": role, "text": text})
 
-    def recent_context(self, n: int = 4) -> str:
-        """Last n turns as a plain string for prompt context."""
-        return "\n".join(
-            f"{t['role'].capitalize()}: {t['text']}" for t in self.history[-n:]
-        )
 
-
-# ── ChatBot ───────────────────────────────────────────────────────────────────
+#   ChatBot  
 class ChatBot:
     """Load once at startup; call .chat() per request."""
 
     def __init__(self) -> None:
-        self._vectorizer: Any = None
-        self._classifier: Any = None
-        self._label_encoder: Any = None
-        self._intents: list[str] = list(_RESPONSES.keys())
+        # ML components
+        self._intent_pipeline: Any = None   # sklearn Pipeline (vectoriser + classifier)
         self._ready = False
 
-        # In-memory session store  {session_id: ConversationState}
+        # Catalog (loaded from pkl or defaults)
+        self._svc_names: list[str] = list(_DEFAULT_SVC_NAMES)
+        self._svc_tier: dict[str, str] = {}
+        self._price_guide: dict[str, str] = dict(_DEFAULT_PRICE_GUIDE)
+        self._by_cat: dict[str, list[str]] = {}
+        self._by_tier: dict[str, list[str]] = {}
+
+        # spaCy entity extractors (built after catalog is loaded)
+        self._nlp = None
+        self._phrase_matcher = None
+
+        # Session store {session_id: ConversationState}
         self._sessions: dict[str, ConversationState] = {}
 
         self._load()
+        self._nlp, self._phrase_matcher = _build_phrase_matcher(self._svc_names)
 
-    # ── private ──────────────────────────────────────────────────────────────
+    #   loading  
 
     def _load(self) -> None:
         if not _MODEL_PATH.exists():
@@ -148,110 +199,271 @@ class ChatBot:
             return
 
         try:
-            with open(_MODEL_PATH, "rb") as fh:
-                bundle = pickle.load(fh)
+            try:
+                bundle = joblib.load(_MODEL_PATH)
+            except Exception:
+                with open(_MODEL_PATH, "rb") as fh:
+                    bundle = pickle.load(fh)
 
-            if isinstance(bundle, dict):
-                self._vectorizer    = bundle.get("vectorizer")
-                self._classifier    = bundle.get("classifier")
-                self._label_encoder = bundle.get("label_encoder")
-                if "intents" in bundle:
-                    self._intents = bundle["intents"]
-            else:
+            if not isinstance(bundle, dict):
                 logger.warning("Unexpected pkl format — falling back to rule-based mode.")
                 return
 
+            #   FIX: the notebook saves the pipeline under "intent_pipeline" ──
+            pipeline = bundle.get("intent_pipeline")
+            if pipeline is None:
+                logger.warning(
+                    "Key 'intent_pipeline' not found in bundle (found: %s). "
+                    "Falling back to rule-based mode.",
+                    list(bundle.keys()),
+                )
+                return
+
+            self._intent_pipeline = pipeline
+
+            # Load catalog data if present
+            if "service_names"    in bundle: self._svc_names   = bundle["service_names"]
+            if "service_to_tier"  in bundle: self._svc_tier    = bundle["service_to_tier"]
+            if "price_guide"      in bundle: self._price_guide = bundle["price_guide"]
+            if "services_by_tier" in bundle: self._by_tier     = bundle["services_by_tier"]
+            if "services_by_category" in bundle: self._by_cat  = bundle["services_by_category"]
+
             self._ready = True
-            logger.info("Chatbot model loaded (intents: %s)", self._intents)
+            labels = bundle.get("intent_labels", [])
+            logger.info("Chatbot model loaded (intents: %s)", labels)
+
         except Exception as exc:
             logger.error("Failed to load chatbot model: %s", exc)
 
+    #   entity extraction  
+
+    def _extract_service(self, text: str) -> str | None:
+        if self._nlp and self._phrase_matcher:
+            try:
+                doc = self._nlp(text.lower())
+                matches = self._phrase_matcher(doc)
+                if matches:
+                    _, start, end = matches[0]
+                    matched_lower = doc[start:end].text
+                    for svc in self._svc_names:
+                        if svc.lower() == matched_lower:
+                            return svc
+            except Exception:
+                pass
+        return extract_service_regex(text, self._svc_names)
+
+    def _extract_datetime(self, text: str):
+        return extract_datetime_from_text(text)
+
+    #   intent classification  
+
     def _classify_intent(self, text: str) -> tuple[str, float]:
-        """Return (intent, confidence). Falls back to rules if model not ready."""
-        if not self._ready or self._vectorizer is None or self._classifier is None:
-            return _rule_based_intent(text), 0.0
+        """Return (intent, confidence). Falls back to rule-based when model not ready."""
+        if self._ready and self._intent_pipeline is not None:
+            try:
+                pred = self._intent_pipeline.predict([text])[0]
+                confidence = 0.0
+                clf = self._intent_pipeline.named_steps.get("classifier")
+                if clf is not None and hasattr(clf, "predict_proba"):
+                    vec = self._intent_pipeline.named_steps["vectoriser"]
+                    X = vec.transform([text])
+                    confidence = float(clf.predict_proba(X)[0].max())
+                elif clf is not None and hasattr(clf, "decision_function"):
+                    vec = self._intent_pipeline.named_steps["vectoriser"]
+                    X = vec.transform([text])
+                    scores = clf.decision_function(X)[0]
+                    # Normalise decision scores to a rough confidence proxy
+                    scores_shifted = scores - scores.min()
+                    total = scores_shifted.sum()
+                    if total > 0:
+                        confidence = float(scores_shifted.max() / total)
 
-        try:
-            vec = self._vectorizer.transform([text])
-            pred = self._classifier.predict(vec)[0]
+                # Fall back to rules if not confident enough
+                if confidence < 0.30:
+                    return _rule_based_intent(text), confidence
+                return str(pred), confidence
+            except Exception as exc:
+                logger.warning("ML classification failed: %s", exc)
 
-            # Decode label
-            if self._label_encoder is not None:
-                intent = self._label_encoder.inverse_transform([pred])[0]
-            elif isinstance(pred, (int, np.integer)):
-                intent = self._intents[pred] if pred < len(self._intents) else "fallback"
-            else:
-                intent = str(pred)
+        return _rule_based_intent(text), 0.0
 
-            # Confidence (if classifier supports predict_proba)
-            confidence = 0.0
-            if hasattr(self._classifier, "predict_proba"):
-                proba = self._classifier.predict_proba(vec)[0]
-                confidence = float(proba.max())
+    #   recommendation helper  
 
-            # Fall back to rules if model is not confident
-            if confidence < 0.35:
-                return _rule_based_intent(text), confidence
+    def _pick_recommendation(self, pref_text: str) -> tuple[str, str]:
+        lower = pref_text.lower()
+        if any(kw in lower for kw in ["stress", "relax", "calm", "peaceful", "unwind", "sooth"]):
+            pool = (self._by_cat.get("massage", []) +
+                    ["Meditation & Breathwork", "Sound Bath Therapy", "Float Tank Session"])
+        elif any(kw in lower for kw in ["pain", "muscle", "sport", "athletic", "tension", "stiff"]):
+            pool = ["Deep Tissue Massage", "Sports Massage", "Stretching & Mobility Session", "Cupping Therapy"]
+        elif any(kw in lower for kw in ["skin", "face", "facial", "glow", "anti-aging", "acne"]):
+            pool = self._by_cat.get("facial", ["Classic Facial", "Hydrating Facial"])
+        elif any(kw in lower for kw in ["budget", "cheap", "affordable", "value"]):
+            pool = self._by_tier.get("budget", [])
+        elif any(kw in lower for kw in ["luxury", "premium", "indulge", "special"]):
+            pool = self._by_tier.get("premium", [])
+        elif any(kw in lower for kw in ["couple", "partner", "date", "together"]):
+            pool = ["Couples Massage", "Wellness Package"]
+        else:
+            pool = self._by_cat.get("massage", self._svc_names[:5])
 
-            return intent, confidence
-        except Exception as exc:
-            logger.warning("Intent classification failed: %s", exc)
-            return _rule_based_intent(text), 0.0
+        if not pool:
+            pool = self._svc_names[:5]
 
-    def _contextual_response(
+        pick = random.choice(pool)
+        tier = self._svc_tier.get(pick, "mid")
+        price = self._price_guide.get(tier, "see website for pricing")
+        return pick, price
+
+    #   state machine response  
+
+    def _state_machine_response(
         self,
         intent: str,
         state: ConversationState,
         user_text: str,
+        svc_ent: str | None,
+        dt_ent: Any,
     ) -> str:
-        """
-        Augment the base template response with conversation context.
-        Handles simple multi-turn flows (e.g. collect service → date → confirm).
-        """
-        base = _pick_response(intent)
 
-        # ── Multi-turn: booking flow ─────────────────────────────────────────
-        if intent == "book_service":
-            if "service" not in state.context:
-                # Try to extract service name from user message
-                services_pattern = re.compile(
-                    r"\b(swedish|deep tissue|hot stone|aromatherapy|reflexology|"
-                    r"sports|prenatal|couples)\b",
-                    re.I,
-                )
-                m = services_pattern.search(user_text)
-                if m:
-                    state.context["service"] = m.group(0).title()
-                    return (
-                        f"Great choice! {state.context['service']} is wonderful. "
-                        "What date and time work best for you?"
-                    )
-                return base
-            elif "date" not in state.context:
-                state.context["date"] = user_text  # store raw date string
-                return (
-                    f"Perfect! I'll note {user_text} for your "
-                    f"{state.context.get('service', 'session')}. "
-                    "Can I confirm your name and contact number to complete the booking?"
-                )
+        ds = state.dialogue_state
+
+        #   AWAIT_RESCHEDULE: waiting for yes/no  
+        if ds == DialogueState.AWAIT_RESCHEDULE:
+            if intent == "confirm_yes":
+                state.dialogue_state = DialogueState.AWAIT_NEW_DATETIME
+                return "Please provide the new date and time you'd like to reschedule to."
             else:
-                state.context.clear()
-                return (
-                    "Your booking request has been received! Our team will confirm "
-                    "within 30 minutes. Is there anything else I can help with?"
-                )
+                state.dialogue_state = DialogueState.IDLE
+                return ("No problem! Your booking remains unchanged. "
+                        "Let me know if there's anything else I can help you with.")
 
-        # ── Contextual follow-up after recommendation ────────────────────────
-        if intent == "recommendation" and state.last_intent == "service_inquiry":
-            return (
-                "Based on what you were asking about, I'd especially recommend "
-                "our Deep Tissue Massage or Aromatherapy. "
-                "Would you like to book one of those?"
-            )
+        #   AWAIT_NEW_DATETIME: waiting for a date  
+        if ds == DialogueState.AWAIT_NEW_DATETIME:
+            if dt_ent:
+                state.booked_at = dt_ent
+                state.dialogue_state = DialogueState.IDLE
+                return (f"Done! Reschedule request sent — your new date: {_format_dt(dt_ent)}. "
+                        "You'll be notified once it's confirmed.")
+            return ('I couldn\'t read that date. Please try a format like "30 Mar 2026 10 am" or "April 15, 2026 at 2 PM".')
 
-        return base
+        #   AWAIT_BOOK_SERVICE: waiting for service name  
+        if ds == DialogueState.AWAIT_BOOK_SERVICE:
+            if svc_ent:
+                state.booked_service = svc_ent
+                state.dialogue_state = DialogueState.AWAIT_BOOK_DATETIME
+                return (f"Great choice — {svc_ent}! "
+                        "What date and time would you like to book it?")
+            svc_sample = ", ".join(random.sample(self._svc_names, min(3, len(self._svc_names))))
+            return (f"I didn't catch a service name. We offer services like {svc_sample}, and more. "
+                    "Which would you like?")
 
-    # ── public ───────────────────────────────────────────────────────────────
+        #   AWAIT_BOOK_DATETIME: waiting for date/time  
+        if ds == DialogueState.AWAIT_BOOK_DATETIME:
+            if dt_ent:
+                state.booked_at = dt_ent
+                svc = state.booked_service
+                state.dialogue_state = DialogueState.IDLE
+                return (f"Your {svc} has been booked for {_format_dt(dt_ent)}. "
+                        "You'll receive a confirmation shortly. Is there anything else?")
+            return ('Please share the date and time, e.g. "April 15, 2026 at 2 PM". '
+                    "When would you like to come in?")
+
+        #   AWAIT_CANCEL_REF: waiting for a booking reference  
+        if ds == DialogueState.AWAIT_CANCEL_REF:
+            ref_match = re.search(r"\b(BK[\-\s]?\d{4,}[\-\d]*|\d{6,})\b", user_text, re.IGNORECASE)
+            if ref_match:
+                ref_no = ref_match.group().upper()
+                state.dialogue_state = DialogueState.IDLE
+                return (f"Booking {ref_no} has been successfully cancelled. "
+                        "A confirmation will be sent to your registered email. "
+                        "Is there anything else I can help with?")
+            return ("I need your booking reference number to proceed. "
+                    "It looks like BK-YYYYMMDD-XXX and can be found in your confirmation email.")
+
+        #   AWAIT_PRICE_SVC: waiting for which service to price  
+        if ds == DialogueState.AWAIT_PRICE_SVC:
+            if svc_ent:
+                tier  = self._svc_tier.get(svc_ent, "mid")
+                price = self._price_guide.get(tier, "see website")
+                state.dialogue_state = DialogueState.IDLE
+                return (f"{svc_ent} is a {tier}-tier service, priced at {price}. "
+                        "Would you like to book it?")
+            return ("Which service are you asking about? "
+                    "For example: 'Swedish Massage', 'Hot Stone Massage', 'Classic Facial'.")
+
+        #   AWAIT_REC_PREF: waiting for preference text  
+        if ds == DialogueState.AWAIT_REC_PREF:
+            suggested, price = self._pick_recommendation(user_text)
+            state.dialogue_state = DialogueState.IDLE
+            return (f"Based on your preference, I'd recommend {suggested} ({price}). "
+                    "Would you like to book it?")
+
+        #   IDLE: route by intent  
+        if intent == "greet":
+            return ("Hello! Welcome to Blyss Wellness 🌿 "
+                    "I can help you book, cancel, reschedule, get pricing, "
+                    "or recommend a service. What would you like to do?")
+
+        if intent == "farewell":
+            return "You're welcome! Have a wonderful day. We look forward to seeing you soon. 🙏"
+
+        if intent == "change_booking":
+            if dt_ent:
+                state.booked_at = dt_ent
+                return (f"Reschedule request sent — new date: {_format_dt(dt_ent)}. "
+                        "You'll be notified once confirmed.")
+            state.dialogue_state = DialogueState.AWAIT_RESCHEDULE
+            return ("Yes, you can reschedule your booking. "
+                    "Would you like me to assist you with that?")
+
+        if intent == "make_booking":
+            if svc_ent and dt_ent:
+                state.booked_service = svc_ent
+                state.booked_at = dt_ent
+                return (f"Your {svc_ent} has been booked for {_format_dt(dt_ent)}. "
+                        "You'll receive a confirmation shortly!")
+            if svc_ent:
+                state.booked_service = svc_ent
+                state.dialogue_state = DialogueState.AWAIT_BOOK_DATETIME
+                return (f"Great choice — {svc_ent}! "
+                        "What date and time would you like to book it?")
+            state.dialogue_state = DialogueState.AWAIT_BOOK_SERVICE
+            svc_sample = ", ".join(random.sample(self._svc_names, min(3, len(self._svc_names))))
+            return (f"I'd love to help you make a booking! "
+                    f"Which service are you interested in? E.g. {svc_sample}.")
+
+        if intent == "cancel_booking":
+            state.dialogue_state = DialogueState.AWAIT_CANCEL_REF
+            return ("I can help you cancel your booking. "
+                    "Please provide your booking reference number "
+                    "(found in your confirmation email, e.g. BK-20260315-001).")
+
+        if intent == "check_price":
+            if svc_ent:
+                tier  = self._svc_tier.get(svc_ent, "mid")
+                price = self._price_guide.get(tier, "see website")
+                return (f"{svc_ent} is a {tier}-tier service, priced at {price}. "
+                        "Would you like to book it?")
+            state.dialogue_state = DialogueState.AWAIT_PRICE_SVC
+            return ("Happy to share pricing information! "
+                    "Which service are you interested in?")
+
+        if intent == "get_recommendation":
+            state.dialogue_state = DialogueState.AWAIT_REC_PREF
+            return ("I'd love to help you find the perfect treatment! "
+                    "Could you tell me a bit about what you're looking for? "
+                    "(e.g. relaxation, muscle relief, skincare, something luxurious)")
+
+        if intent in ("confirm_yes", "confirm_no"):
+            return "Got it! Is there anything else I can help you with?"
+
+        # Fallback
+        return ("I'm not quite sure I understood that. "
+                "I can help with booking, cancellation, rescheduling, pricing, "
+                "or service recommendations. What would you like?")
+
+    #   public API  
 
     @property
     def is_ready(self) -> bool:
@@ -278,11 +490,6 @@ class ChatBot:
         """
         Process a user message and return a response dict.
 
-        Parameters
-        ----------
-        user_message : str
-        session_id   : str | None  — pass None to start a new session
-
         Returns
         -------
         {
@@ -292,41 +499,35 @@ class ChatBot:
             "response": str,
             "history_length": int,
             "model_used": str,
+            "dialogue_state": str,
         }
         """
         state = self.get_or_create_session(session_id)
 
-        # Classify intent
         intent, confidence = self._classify_intent(user_message)
+        svc_ent = self._extract_service(user_message)
+        dt_ent  = self._extract_datetime(user_message)
 
-        # Build contextual response
-        response = self._contextual_response(intent, state, user_message)
+        response = self._state_machine_response(intent, state, user_message, svc_ent, dt_ent)
 
-        # Update state
         state.add_turn("user", user_message)
         state.add_turn("assistant", response)
         state.last_intent = intent
 
-        model_used = "ml_classifier" if self._ready and confidence >= 0.35 else "rule_based"
+        model_used = "ml_classifier" if self._ready and confidence >= 0.30 else "rule_based"
 
         return {
-            "session_id": state.session_id,
-            "intent": intent,
-            "confidence": round(confidence, 4),
-            "response": response,
-            "history_length": len(state.history) // 2,  # turns (user+assistant = 1 turn)
-            "model_used": model_used,
+            "session_id":    state.session_id,
+            "intent":        intent,
+            "confidence":    round(confidence, 4),
+            "response":      response,
+            "history_length": len(state.history) // 2,
+            "model_used":    model_used,
+            "dialogue_state": state.dialogue_state.name,
         }
 
 
-# ── numpy import guard (only needed for confidence float cast) ────────────────
-try:
-    import numpy as np
-except ImportError:
-    np = None  # type: ignore
-
-
-# ── Singleton ─────────────────────────────────────────────────────────────────
+#   Singleton  
 _bot: ChatBot | None = None
 
 

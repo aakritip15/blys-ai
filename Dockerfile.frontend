@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+COPY frontend/ ./frontend/
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy frontend code  
@@ -29,4 +31,5 @@ RUN mkdir -p ~/.streamlit && \
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "frontend/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# CMD ["streamlit", "run", "frontend/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["sh", "-c", "streamlit run frontend/app.py --server.port ${PORT:-8501} --server.address 0.0.0.0"]
