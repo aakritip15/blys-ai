@@ -75,7 +75,30 @@ docker-compose down
 
 ---
 
-### Option 2: Local Development
+### Option 2: Live Services (Render)
+ 
+
+The app is deployed on Render's free tier:
+- **Frontend**: https://blys-ai-frontend.onrender.com/
+- **Backend API Docs**: https://blys-ai-backend.onrender.com/docs
+
+#### Render Cold Start Behavior
+
+Render's free tier **spins down services after 15 minutes of inactivity**. On first request:
+- Backend takes **30–50 seconds to start** (cold start)
+- Frontend also take time to load. Initial requests from the frontend may be slow or fail until the backend is ready
+
+#### Steps to Use Frontend:
+1. **Before opening the frontend**, visit the [backend docs](https://blys-ai-backend.onrender.com/docs) to **wake up the API**
+2. Wait for backend to respond with Swagger UI (confirms it's running)
+3. Now open [frontend](https://blys-ai-frontend.onrender.com/) — it will connect to the active backend
+
+#### What Not To Do:
+-  Don't open frontend immediately if backend hasn't been used in 15+ mins ( Frontend will automatically wake the backend, but the first request may take time)
+
+---
+
+### Option 3: Local Development
 
 **Requirements:** Python 3.10+
 
@@ -153,9 +176,13 @@ Supports multi-turn dialogue via `session_id`. Omit `session_id` on first messag
 }
 ```
 
-### `GET /customers/{customer_id}/segment`
+### `DELETE /chatbot/session`
 ```json
-{ "customer_id": 1042, "segment": "Loyal Regular" }
+// Request
+{ "session_id": "a3f9b1c2" }
+
+// Response
+{ "message": "Session 'a3f9b1c2' cleared." }
 ```
 
 ---
@@ -274,29 +301,14 @@ For production deployment:
 
 ---
 
-## Tests
-
-```bash
-pytest tests/ -v
-```
-
-Tests cover:
-- Missing value imputation
-- Recency / sentiment / churn risk feature engineering
-- Intent classification accuracy across all 5 intents
-- Date entity extraction
-- Multi-turn reschedule and cancel dialogue flows
-
----
-
 ## ML Design Decisions
 
 | Component | Approach | Rationale |
 |-----------|----------|-----------|
-| Sentiment | VADER | Fast, no training required, strong on short review text |
-| Clustering | KMeans + silhouette k-selection | Interpretable segments; auto-selects k in [3,6] |
-| Recommendations | Truncated SVD (collaborative filtering) | Captures latent service preferences; frequency-weighted |
-| Chatbot intent | TF-IDF + LogisticRegression pipeline | High accuracy on small corpus; single-artefact serialisation |
+| Sentiment | TextBlob | Polarity scoring on [-1, 1]; no training required |
+| Clustering | KMeans + silhouette k-selection | Interpretable segments; auto-selects optimal k in range [2,8] |
+| Recommendations | **Hybrid**: TruncatedSVD (9 factors) + content-based cosine similarity | SVD captures latent service preferences; content-based layer adds interpretability via price tier & service type. Blended with α=0.65 |
+| Chatbot intent | CountVectorizer (1–2 grams) + SGDClassifier (Linear SVM) | Fast inference, handles small training corpus well, robust to imbalanced intents |
 | Dialogue management | Finite state machine | Explicit, debuggable multi-turn flows without external dependencies |
 
 ---
